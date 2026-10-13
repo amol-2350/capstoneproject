@@ -32,4 +32,4 @@ app.put("/inventory/:productId",(req,res)=>{
  })
 })
 
-app.listen(5002,()=>console.log("inventory service running"))
+app.listen(5003,()=>console.log("inventory service running"))

@@ -12,12 +12,12 @@ const [price,setPrice]=useState("")
 const [stock,setStock]=useState("")
 
 const loadProducts=async()=>{
- const res=await axios.get("http://localhost:5000/products")
+ const res=await axios.get("http://localhost:5001/products")
  setProducts(res.data)
 }
 
 const loadOrders=async()=>{
- const res=await axios.get("http://localhost:5001/orders")
+ const res=await axios.get("http://localhost:5002/orders")
  setOrders(res.data)
 }
 
@@ -27,12 +27,12 @@ useEffect(()=>{
 },[])
 
 const addProduct=async()=>{
- await axios.post("http://localhost:5000/products",{name,price,stock})
+ await axios.post("http://localhost:5001/products",{name,price,stock})
  loadProducts()
 }
 
 const createOrder=async(id)=>{
- await axios.post("http://localhost:5001/orders",{product_id:id,quantity:1})
+ await axios.post("http://localhost:5002/orders",{product_id:id,quantity:1})
  loadOrders()
 }
 

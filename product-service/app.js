@@ -37,4 +37,4 @@ app.delete("/products/:id",(req,res)=>{
   })
 })
 
-app.listen(5000,()=>console.log("product service running"))
+app.listen(5001,()=>console.log("product service running"))
