@@ -1,0 +1,70 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ecommerce
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+  product-service:
+    build: ./product-service
+    container_name: ecommerce-product-service
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mysql
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+  order-service:
+    build: ./order-service
+    container_name: ecommerce-order-service
+    ports:
+      - "5002:5002"
+    depends_on:
+      - mysql
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+  inventory-service:
+    build: ./inventory-service
+    container_name: ecommerce-inventory-service
+    ports:
+      - "5003:5003"
+    depends_on:
+      - mysql
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: ecommerce-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - product-service
+      - order-service
+      - inventory-service
+    networks:
+      - ecommerce-network
+    restart: unless-stopped
+
+volumes:
+  mysql-data:
+    external: true
+    name: 61ee5c0013bfb8b5062fe4ea74cbcd62bf16ac67068ce893afe892403091644a
+
+networks:
+  ecommerce-network:
+    external: true
+    name: ecommerce-network
